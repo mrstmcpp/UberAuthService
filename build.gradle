@@ -36,6 +36,9 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation group: 'org.flywaydb', name: 'flyway-mysql', version: '11.7.0'
+
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '3.4.4'
 }
 
 tasks.named('test') {

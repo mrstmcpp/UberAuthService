@@ -35,4 +35,7 @@ public class Passenger extends BaseModel {
     private List<Booking> bookings = new ArrayList<>();
 
 
+//    public Long getId() {
+//        return id;
+//    }
 }
