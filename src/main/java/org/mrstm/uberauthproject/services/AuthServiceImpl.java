@@ -19,7 +19,7 @@ public class AuthServiceImpl implements AuthService {
     Note -> we cannot directly use dependency injection  here.
     bcoz spring doesn't know how to create object of it.
     So, handling it in configurations.
-    After handling it in configurations package.. it started working here
+    After handling it in configurations package. it started working here
     as now spring knows from where we have to initiate it.
      */
 
@@ -32,7 +32,7 @@ public class AuthServiceImpl implements AuthService {
     public PassengerResponseDTO sigunUpPassenger(PassengerSignUpRequestDTO passengerSignUpRequestDTO) {
         Passenger passenger = Passenger.builder()
                 .email(passengerSignUpRequestDTO.getEmail())
-                .password(bCryptPasswordEncoder.encode(passengerSignUpRequestDTO.getPassword()))
+                .password(bCryptPasswordEncoder.encode(passengerSignUpRequestDTO.getPassword())) // to be encrypted
                 .passanger_name(passengerSignUpRequestDTO.getName())
                 .phoneNumber(passengerSignUpRequestDTO.getPhoneNumber())
                 .build();
