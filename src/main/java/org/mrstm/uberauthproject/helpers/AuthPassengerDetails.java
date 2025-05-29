@@ -36,6 +36,10 @@ public class AuthPassengerDetails extends Passenger implements UserDetails {
         return "";
     }
 
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
 
     //currently some of the function is not needed. hence, set them to always true;
     @Override
