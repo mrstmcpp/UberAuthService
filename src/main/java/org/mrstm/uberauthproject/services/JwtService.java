@@ -2,6 +2,7 @@ package org.mrstm.uberauthproject.services;
 
 
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,9 +10,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
+import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 @Service
 public class JwtService implements CommandLineRunner {
@@ -34,6 +37,62 @@ public class JwtService implements CommandLineRunner {
                 .signWith(key)
                 .compact();
     }
+
+    private SecretKey getSignInKey(){
+        return Keys.hmacShaKeyFor(secret.getBytes());
+    }
+
+    private Claims extractAllClaims(String token){
+        return Jwts
+                .parser()
+                .verifyWith(getSignInKey())
+                .build()
+                .parseEncryptedClaims(token)
+                .getPayload();
+    }
+
+    public <T> T extractFromToken(String token , Function<Claims , T> claimsExtractor){
+        //here claimsextractor would be a function which will be passed inorder to get required data from token.
+        final Claims claims = extractAllClaims(token);
+        return claimsExtractor.apply(claims);
+    }
+
+
+    public String generateToken(String username){
+        return generateToken(new HashMap<>(), username);
+    }
+
+    /**
+     * above function is created as it is more readable while calling this function in any component
+     * String token = jwtService.generateToken(userDetails);
+     *String token = jwtService.generateToken(new HashMap<>(), userDetails);
+     *
+     * 1st one is more clean.
+     * @param payload
+     * @param username
+     * @return
+     */
+    public String generateToken(Map<String , Object> payload , String username){
+        return createToken(payload,username);
+    }
+
+    public String extractUsernameFromToken(String token){
+        return extractFromToken(token, Claims::getSubject);
+    }
+
+    private Date getExpirationDateFromToken(String token){
+        return extractFromToken(token , Claims::getExpiration);
+    }
+
+    private Boolean isTokenExpired(String token){
+        //returns true if expired...
+        return getExpirationDateFromToken(token).before(new Date());
+    }
+
+    public Boolean isTokenValid(String token , String username){
+        return username.equals(extractUsernameFromToken(token)) && !isTokenExpired(token);
+    }
+
 
     @Override
     public void run(String... args) throws Exception {
