@@ -47,7 +47,7 @@ public class JwtService implements CommandLineRunner {
                 .parser()
                 .verifyWith(getSignInKey())
                 .build()
-                .parseEncryptedClaims(token)
+                .parseSignedClaims(token)
                 .getPayload();
     }
 
