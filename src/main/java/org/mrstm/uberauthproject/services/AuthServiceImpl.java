@@ -2,7 +2,7 @@ package org.mrstm.uberauthproject.services;
 
 import org.mrstm.uberauthproject.dto.PassengerResponseDTO;
 import org.mrstm.uberauthproject.dto.PassengerSignUpRequestDTO;
-import org.mrstm.uberauthproject.models.Passenger;
+import org.mrstm.uberentityservice.models.Passenger;
 import org.mrstm.uberauthproject.repositories.PassengerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

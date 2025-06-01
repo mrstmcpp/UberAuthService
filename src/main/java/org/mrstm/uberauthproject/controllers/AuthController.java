@@ -20,10 +20,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
@@ -55,6 +51,7 @@ public class AuthController {
     @PostMapping("/signin/passenger")
     public ResponseEntity<?> signIn(@RequestBody AuthRequestDto authRequestDto , HttpServletResponse response) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequestDto.getEmail(), authRequestDto.getPassword()));
+        //above line check whether user got successful login or not
         if(authentication.isAuthenticated()) {
             String jwtToken = jwtService.generateToken(authRequestDto.getEmail());
             ResponseCookie responseCookie = ResponseCookie.from("JwtToken" , jwtToken)
@@ -71,7 +68,7 @@ public class AuthController {
     }
 
 
-    @PostMapping("/validate")
+    @GetMapping("/validate")
     public ResponseEntity<?> validatePassenger(HttpServletRequest request)  {
         String jwtToken = null;
         if (request.getCookies() != null) {
@@ -84,7 +81,7 @@ public class AuthController {
             }
         }
 
-        String username = jwtService.extractUsernameFromToken(jwtToken);
+        String username = jwtService.extractEmailFromToken(jwtToken);
 
         if (jwtService.isTokenValid(jwtToken, username)) {
             return new ResponseEntity<>("Token is valid", HttpStatus.OK);

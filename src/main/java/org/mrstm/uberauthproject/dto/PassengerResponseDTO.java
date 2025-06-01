@@ -2,7 +2,7 @@ package org.mrstm.uberauthproject.dto;
 
 
 import lombok.*;
-import org.mrstm.uberauthproject.models.Passenger;
+import org.mrstm.uberentityservice.models.Passenger;
 
 import java.util.Date;
 

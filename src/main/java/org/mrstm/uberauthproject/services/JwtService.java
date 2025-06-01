@@ -10,7 +10,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
-import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -76,7 +75,7 @@ public class JwtService implements CommandLineRunner {
         return createToken(payload,username);
     }
 
-    public String extractUsernameFromToken(String token){
+    public String extractEmailFromToken(String token){
         return extractFromToken(token, Claims::getSubject);
     }
 
@@ -90,7 +89,7 @@ public class JwtService implements CommandLineRunner {
     }
 
     public Boolean isTokenValid(String token , String username){
-        return username.equals(extractUsernameFromToken(token)) && !isTokenExpired(token);
+        return username.equals(extractEmailFromToken(token)) && !isTokenExpired(token);
     }
 
 

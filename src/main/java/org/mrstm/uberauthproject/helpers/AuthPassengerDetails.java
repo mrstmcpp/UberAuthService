@@ -1,6 +1,6 @@
 package org.mrstm.uberauthproject.helpers;
 
-import org.mrstm.uberauthproject.models.Passenger;
+import org.mrstm.uberentityservice.models.Passenger;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

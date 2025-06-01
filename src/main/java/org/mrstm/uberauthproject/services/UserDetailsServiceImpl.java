@@ -1,7 +1,7 @@
 package org.mrstm.uberauthproject.services;
 
 import org.mrstm.uberauthproject.helpers.AuthPassengerDetails;
-import org.mrstm.uberauthproject.models.Passenger;
+import org.mrstm.uberentityservice.models.Passenger;
 import org.mrstm.uberauthproject.repositories.PassengerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
